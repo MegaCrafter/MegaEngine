@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/megacrafter/projects/openglengine/out/build",
+  "command": "/usr/bin/c++  -I/home/megacrafter/projects/openglengine/include  -o CMakeFiles/openglengine.dir/src/main.cpp.o -c /home/megacrafter/projects/openglengine/src/main.cpp",
+  "file": "/home/megacrafter/projects/openglengine/src/main.cpp"
+}
+]
