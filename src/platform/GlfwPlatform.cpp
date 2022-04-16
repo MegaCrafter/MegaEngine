@@ -10,11 +10,11 @@
 namespace Engine {
 
 bool GlfwPlatform::is_key_down(int keycode) const {
-    return glfwGetKey(m_window.get(), keycode) == GLFW_PRESS;
+    return glfwGetKey(m_window, keycode) == GLFW_PRESS;
 }
 
 void GlfwPlatform::cursor_pos(double* xpos, double* ypos) const {
-    glfwGetCursorPos(m_window.get(), xpos, ypos);
+    glfwGetCursorPos(m_window, xpos, ypos);
 }
 
 float GlfwPlatform::get_time() const {
@@ -34,7 +34,7 @@ static void on_cursor_pos(GLFWwindow* window, double xpos, double ypos) {
 }
 
 bool GlfwPlatform::setup_window(unsigned int width, unsigned int height, const char* name) {
-    s_eventbus = m_eventbus.get();
+    s_eventbus = m_eventbus;
 
     if (!glfwInit()) return false;
 
@@ -42,34 +42,37 @@ bool GlfwPlatform::setup_window(unsigned int width, unsigned int height, const c
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    m_window = Ref<GLFWwindow, DestroyGlfwWindow>(glfwCreateWindow(width, height, name, NULL, NULL));
+    m_window = glfwCreateWindow(width, height, name, NULL, NULL);
     if (!m_window) { return false; }
 
-    glfwSetInputMode(m_window.get(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-    glfwSetWindowSizeCallback(m_window.get(), on_window_resize);
-    glfwSetCursorPosCallback(m_window.get(), on_cursor_pos);
+    glfwSetWindowSizeCallback(m_window, on_window_resize);
+    glfwSetCursorPosCallback(m_window, on_cursor_pos);
 
-    glfwMakeContextCurrent(m_window.get());
+    glfwMakeContextCurrent(m_window);
 
     return true;
 }
 
 bool GlfwPlatform::window_should_close() {
-    return glfwWindowShouldClose(m_window.get());
+    return glfwWindowShouldClose(m_window);
 }
 
 void GlfwPlatform::loop_logic() {
-    glfwSwapBuffers(m_window.get());
+    glfwSwapBuffers(m_window);
 
     glfwPollEvents();
 }
 
 void GlfwPlatform::destroy() {
+    glfwDestroyWindow(m_window);
     glfwTerminate();
 }
 
-GlfwPlatform::~GlfwPlatform() {}
+GlfwPlatform::~GlfwPlatform() {
+    destroy();
+}
 
 }  // namespace Engine
 

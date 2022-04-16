@@ -9,8 +9,8 @@
 
 namespace Engine {
 
-class Renderer {
-   private:
+class Renderer final {
+private:
     unsigned int m_vao;
     unsigned int m_vbo;
     unsigned int m_ibo;
@@ -18,7 +18,6 @@ class Renderer {
     unsigned int m_batch_max_quads;
 
     const Scene* m_scene;
-    Shared<const Platform> m_platform;
 
     std::unordered_map<std::string, int> m_uniform_cache;
     int get_uniform_location(const char* name);
@@ -27,9 +26,9 @@ class Renderer {
 
     friend class Application;
 
-   public:
-    Renderer(unsigned int batch_max_quads, const Scene* const scene, Shared<const Platform> platform)
-        : m_batch_max_quads(batch_max_quads), m_scene(scene), m_platform(platform) {}
+public:
+    Renderer(unsigned int batch_max_quads, const Scene* const scene)
+        : m_batch_max_quads(batch_max_quads), m_scene(scene) {}
     ~Renderer();
     bool setup();
     void attach_shader(const Shader& shader) const;

@@ -2,13 +2,12 @@
 
 #include <GL/glew.h>
 
-#include "utils/FileReader.hpp"
+#include "utils/Utils.hpp"
 
 namespace Engine {
 
-Shader::Shader(ShaderType type, const char* filename) : m_type(type) {
-    FileReader reader;
-    std::string contents = reader.read(filename);
+Shader::Shader(ShaderType type, const char* filename): m_type(type) {
+    std::string contents = read_file(filename);
 
     GLenum shader_type;
     switch (type) {

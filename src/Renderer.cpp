@@ -22,6 +22,7 @@ int Renderer::get_uniform_location(const char* name) {
 }
 
 Renderer::~Renderer() {
+    glDeleteProgram(m_program);
     glDeleteVertexArrays(1, &m_vao);
     glDeleteBuffers(1, &m_vbo);
     glDeleteBuffers(1, &m_ibo);
@@ -48,6 +49,7 @@ bool Renderer::setup() {
 
 void Renderer::attach_shader(const Shader& shader) const {
     glAttachShader(m_program, shader.shader_id());
+    glLinkProgram(m_program);
 }
 
 void Renderer::prepare_render() {
@@ -66,7 +68,6 @@ void Renderer::render() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex::pos), offsetof(Vertex, pos));
     glEnableVertexAttribArray(0);
 
-    glLinkProgram(m_program);
     glUseProgram(m_program);
 
     glm::mat4 projection_matrix = m_scene->camera()->projection_matrix();
@@ -99,12 +100,12 @@ void Renderer::render() {
         }
 
         glBufferSubData(GL_ARRAY_BUFFER, vertex_count * sizeof(Vertex), mesh.vertex_count * sizeof(Vertex),
-                        vertices);
+            vertices);
 
         for (int i = 0; i < mesh.index_count; i++) { indices[i] = mesh.indices[i] + vertex_count; }
 
         glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, index_count * sizeof(unsigned int),
-                        mesh.index_count * sizeof(unsigned int), indices);
+            mesh.index_count * sizeof(unsigned int), indices);
 
         index_count += mesh.index_count;
         vertex_count += mesh.vertex_count;

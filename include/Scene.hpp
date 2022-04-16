@@ -1,15 +1,13 @@
 #pragma once
 
-#include <iostream>
-
 #include "ext/entt.hpp"
 #include "platform/Platform.hpp"
 #include "utils/Memory.hpp"
 
 namespace Engine {
 
-class Scene {
-   private:
+class Scene final {
+private:
     entt::registry m_registry;
     class Camera* m_camera;
     Shared<const Platform> m_platform;
@@ -32,7 +30,7 @@ class Scene {
     void prepare_scene() const;
     void end_scene() const;
 
-   public:
+public:
     void set_camera(class Camera* camera);
     class Camera* camera() const;
 

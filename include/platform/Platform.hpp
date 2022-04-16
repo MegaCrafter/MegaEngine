@@ -6,8 +6,8 @@
 namespace Engine {
 
 class Platform {
-   protected:
-    Ref<const EventBus> m_eventbus;
+protected:
+    const EventBus* m_eventbus;
 
     virtual bool is_key_down(int keycode) const {
         return false;
@@ -21,8 +21,8 @@ class Platform {
 
     friend class GameScript;
 
-   public:
-    Platform(const EventBus* const eventbus) : m_eventbus(Ref<const EventBus>(eventbus)) {}
+public:
+    explicit Platform(const EventBus* const eventbus): m_eventbus(eventbus) {}
     virtual bool setup_window(unsigned int width, unsigned int height, const char* name) {
         return false;
     }

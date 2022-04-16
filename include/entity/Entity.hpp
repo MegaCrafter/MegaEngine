@@ -8,12 +8,12 @@
 namespace Engine {
 
 class Entity {
-   private:
+private:
     entt::entity m_entity_id;
     Scene* m_scene;
 
-   public:
-    Entity(Scene* scene);
+public:
+    explicit Entity(Scene* scene);
     ~Entity();
 
     template <typename T, typename... Args>

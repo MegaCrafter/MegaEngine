@@ -9,12 +9,12 @@
 
 namespace Engine {
 
-class Application {
-   private:
+class Application final {
+private:
     Shared<Platform> m_platform;
     Ref<Renderer> m_renderer;
 
-   public:
+public:
     Application(unsigned int batch_max_quads, Scene* const scene, EventBus* const eventbus);
 
     bool start_window(unsigned int width, unsigned int height, const char* name);

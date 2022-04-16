@@ -14,7 +14,7 @@ Application::Application(unsigned int batch_max_quads, Scene* const scene, Event
 #endif
 
     scene->m_platform = m_platform;
-    m_renderer = Ref<Renderer>(new Renderer(batch_max_quads, scene, m_platform));
+    m_renderer = Ref<Renderer>(new Renderer(batch_max_quads, scene));
 }
 
 bool Application::start_window(unsigned int width, unsigned int height, const char* name) {
@@ -39,6 +39,7 @@ void Application::loop() {
 void Application::destroy() {
     m_platform->destroy();
 }
+
 
 void Application::attach_shader(const Shader& shader) {
     m_renderer->attach_shader(shader);

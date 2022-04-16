@@ -10,24 +10,18 @@
 
 namespace Engine {
 
-struct DestroyGlfwWindow {
-    void operator()(GLFWwindow* window) {
-        glfwDestroyWindow(window);
-    }
-};
+class GlfwPlatform final : public Platform {
+private:
+    GLFWwindow* m_window;
 
-class GlfwPlatform : public Platform {
-   private:
-    Ref<GLFWwindow, DestroyGlfwWindow> m_window;
-
-   protected:
+protected:
     virtual bool is_key_down(int keycode) const override;
     virtual void cursor_pos(double* xpos, double* ypos) const override;
 
     virtual float get_time() const override;
 
-   public:
-    GlfwPlatform(const EventBus* const eventbus) : Platform(eventbus) {}
+public:
+    explicit GlfwPlatform(const EventBus* const eventbus): Platform(eventbus) {}
     ~GlfwPlatform();
     virtual bool setup_window(unsigned int width, unsigned int height, const char* name) override;
     virtual bool window_should_close() override;

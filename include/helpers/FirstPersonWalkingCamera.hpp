@@ -9,13 +9,13 @@
 namespace Engine {
 
 class FirstPersonWalkingCamera : public GameScript {
-   private:
+private:
     Camera* m_camera;
     double m_lastx = 0;
     double m_lasty = 0;
     bool first = true;
 
-   protected:
+protected:
     virtual void on_create() {
         m_camera = static_cast<Camera*>(m_entity);
     }
